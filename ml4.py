@@ -37,13 +37,14 @@ temp[7] = temp[7].fillna('may')
 temp[8] = temp[8].fillna('thu')
 temp[9] = temp[9].fillna('nonexistent')
 
-from sklearn.preprocessing import LabelEncoder
-le = LabelEncoder()
 
 temp.isnull().sum()
 
 X[:,[1, 2, 3, 4, 5, 6, 7, 8, 9 ,14]] = temp
 del(temp)
+
+from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
 
 #Encode job
 X[:,1] = le.fit_transform(X[:,1])
@@ -71,13 +72,14 @@ X[:,14] = le.fit_transform(X[:,14])
 from sklearn.preprocessing import OneHotEncoder
 OHE = OneHotEncoder(categorical_features = [1, 2, 3, 4, 5, 6, 7, 8, 9, 14])
 X = OHE.fit_transform(X)
-
-
+X = X.toarray()
 y = le.fit_transform(y)
 
 from sklearn.preprocessing import StandardScaler
 ss = StandardScaler()
 X = ss.fit_transform(X)
+
+
 
 
 
