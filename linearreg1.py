@@ -13,6 +13,8 @@ X = np.c_[X, np.ones(100)]
 
 theta = np.linalg.inv(X.T @ X) @ (X.T @ y )
 
+
+
 dataset = pd.read_excel('NLP/blood.xlsx')
 
 X = dataset.iloc[2:,1].values
