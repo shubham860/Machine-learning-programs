@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-dataset = pd.read_csv('NLP/Data_Pre.csv')
+dataset = pd.read_csv('Data_Pre.csv')
 
 X = dataset.iloc[:,0:3].values
 y = dataset.iloc[:,-1].values
