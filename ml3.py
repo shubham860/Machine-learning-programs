@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-dataset = pd.read_csv('NLP/sal.csv',names = ['age',
+dataset = pd.read_csv('sal.csv',names = ['age',
                                                   'workclass',
                                                   'fnlwgt',
                                                   'education',

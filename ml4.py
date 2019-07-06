@@ -3,7 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-dataset = pd.read_csv('NLP/bank-data.csv',na_values='unknown')
+dataset = pd.read_csv('bank-data.csv',na_values='unknown')
+
+#dataset = pd.read_csv('bank-data.csv',na_values='unknown',sep=';' or delimiter=';') sep or delimeter used for ; sepraeration instead of excel
 
 dataset.info()
 dataset.describe()
@@ -80,8 +82,28 @@ ss = StandardScaler()
 X = ss.fit_transform(X)
 
 
+from sklearn.model_selection import train_test_split
+X_train,X_test,y_train,y_test = train_test_split(X,y)
 
+from sklearn.tree import DecisionTreeClassifier
+dtc = DecisionTreeClassifier()
+dtc.fit(X_train,y_train)
+dtc.score(X_train,y_train)
+dtc.score(X_test,y_test)
 
+y_pred = dtc.predict(X)
 
+from sklearn.metrics import precision_score,recall_score,f1_score
+precision_score(y,y_pred)
+recall_score(y,y_pred)
+f1_score(y,y_pred)
 
+from sklearn.tree import export_graphviz
+export_graphviz(dtc,out_file='BANK_tree.dot')
+
+import graphviz
+with open('BANK_tree.dot') as f:
+    dot_graph = f.read()
+graphviz.Source(dot_graph)   
+    
 
