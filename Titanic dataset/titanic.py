@@ -4,16 +4,6 @@ import numpy as np
 
 dataset = pd.read_csv('titanic.csv')
 
-def Embarked(data):
-    if(data=='S'):
-        return 0
-    elif(data=='Q'):
-        return 1
-    else:
-        return 2 
-     
-dataset['Embarked'] = dataset['Embarked'].apply(Embarked)
-
 X = dataset.iloc[:,[3,4,5,6,7,11]].values
 y = dataset.iloc[:,1].values
 
@@ -22,18 +12,24 @@ temp = pd.DataFrame(X[:,[2,5]])
 temp[0].value_counts()
 temp[1].value_counts()
 
+temp[1].isnull().sum()
 
 temp[0] = temp[0].fillna(28.56)
-temp[1] = temp[1].fillna(0)
+temp[1] = temp[1].fillna('S')
 
 X[:,[2,5]] = temp
 del(temp)
+
 
 from sklearn.preprocessing import LabelEncoder
 le = LabelEncoder()
 
 X[:,0] = le.fit_transform(X[:,0])
 X[:,1] = le.fit_transform(X[:,1])
+X[:,5] = le.fit_transform(X[:,5])
+
+
+a = pd.DataFrame(X)
 
 
 from sklearn.preprocessing import OneHotEncoder
