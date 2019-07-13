@@ -28,11 +28,11 @@ X[:,1] = le.fit_transform(X[:,1])
 X[:,5] = le.fit_transform(X[:,5])
 
 
-
 from sklearn.preprocessing import OneHotEncoder
 ohe = OneHotEncoder(categorical_features=[0,1,5])
 X = ohe.fit_transform(X)
 X = X.toarray()
+
 
 from sklearn.preprocessing import StandardScaler
 std = StandardScaler()
@@ -41,39 +41,40 @@ X = std.fit_transform(X)
 from sklearn.model_selection import train_test_split
 X_train,X_test,y_train,y_test = train_test_split(X,y)
 
-from sklearn.tree import DecisionTreeClassifier
-dtc = DecisionTreeClassifier()
-dtc.fit(X_train,y_train)
-dtc.score(X_train,y_train)
-dtc.score(X_test,y_test)
-
 from sklearn.linear_model import LogisticRegression
 log_reg = LogisticRegression()
-log_reg.fit(X_train,y_train)
-log_reg.score(X_train,y_train)
-log_reg.predict(X[[500]])
-log_reg.score(X_test,y_test)
 
 from sklearn.neighbors import KNeighborsClassifier
 knn = KNeighborsClassifier()
-knn.fit(X_train,y_train)
-knn.score(X_train,y_train)
-knn.score(X_test,y_test)
 
-y_pred = dtc.predict(X)
+from sklearn.tree import DecisionTreeClassifier
+dtc = DecisionTreeClassifier()
 
-from sklearn.metrics import confusion_matrix
-cnn = confusion_matrix(y,y_pred)
+from sklearn.naive_bayes import GaussianNB
+n_b = GaussianNB()
 
-from sklearn.metrics import precision_score,recall_score,f1_score
-precision_score(y,y_pred)
-recall_score(y,y_pred)
-f1_score(y,y_pred)
+from sklearn.svm import SVC
+svm = SVC()
 
-from sklearn.tree import export_graphviz
-export_graphviz(dtc,out_file='Titanic dataset/titanic.dot')
+from sklearn.ensemble import VotingClassifier
+vc = VotingClassifier([('LR',log_reg),
+                        ('KNN',knn),
+                        ('DTC',dtc),
+                        ('NB',n_b),
+                        ('SVM',svm)])
 
-import graphviz
-with open('Titanic dataset/titanic.dot') as f:
-    dot_graph = f.read()
-graphviz.Source(dot_graph)   
+vc.fit(X_train,y_train)
+vc.score(X_train,y_train)
+vc.score(X_test,y_test)
+
+from sklearn.ensemble import BaggingClassifier
+bc = BaggingClassifier(n_b, n_estimators=7)
+bc.fit(X_train,y_train)
+bc.score(X_train,y_train)
+bc.score(X_test,y_test)
+
+from sklearn.ensemble import RandomForestClassifier
+rc = RandomForestClassifier(n_estimators = 5)
+rc.fit(X_train,y_train)
+rc.score(X_train,y_train)
+rc.score(X_test,y_test)
