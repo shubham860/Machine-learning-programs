@@ -29,8 +29,6 @@ X[:,1] = le.fit_transform(X[:,1])
 X[:,5] = le.fit_transform(X[:,5])
 
 
-a = pd.DataFrame(X)
-
 
 from sklearn.preprocessing import OneHotEncoder
 ohe = OneHotEncoder(categorical_features=[0,1])
