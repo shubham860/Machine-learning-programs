@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-dataset = pd.read_csv('NLP\housing.csv')
+dataset = pd.read_csv('housing.csv')
 pd.scatter_matrix(dataset)
 
 plt.scatter(dataset['households'], dataset['total_rooms'])
