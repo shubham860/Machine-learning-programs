@@ -15,7 +15,7 @@ theta = np.linalg.inv(X.T @ X) @ (X.T @ y )
 
 
 
-dataset = pd.read_excel('NLP/blood.xlsx')
+dataset = pd.read_excel('blood.xlsx')
 
 X = dataset.iloc[2:,1].values
 y = dataset.iloc[2:,-1].values
